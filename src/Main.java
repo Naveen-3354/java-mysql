@@ -1,15 +1,6 @@
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-interface FuncInterface {
-    // An abstract function
-    void abstractFun(int x);
-
-    // A non-abstract (or default) function
-    default void normalFun() {
-        System.out.println("Hello");
-    }
-}
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -164,21 +155,7 @@ public class Main {
 //        catch (NullPointerException e) {
 //            System.out.println(e.getMessage());
 //        }
-
-        int[] ax = {2,3,4,5,6};
-        sample1(ax);
-
-        Users user = new Users("Naveen","navee@gmail.com",1);
-
-        System.out.println(user.name());
-
-        String str = "A";
-        System.out.println(str.getClass());
-//        char chr = ;
-        System.out.println(user.name());
     }
-
-
     static boolean sample() {
         System.out.print("Type a number:");
         try {
