@@ -1,4 +1,4 @@
-import model .UserDetails;
+import model.UserDetails;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,17 +19,34 @@ public class Sample {
         Sample sample = new Sample();
         boolean isOn = true;
         while (isOn) {
-            System.out.println("User entries.");
-            System.out.println("Enter: [1 to add user, 2 to get all user details, 3 to get specific user detail, 4 to update a user, 5 to delete a specific user, 6 to delete all users, 7 to exit.]");
+            System.out.println("MAIN MENU:");
+            System.out.println("1 to add user.\n2 to get all user details.\n3 to get specific user detail.\n4 to update a user.\n5 to delete a specific user.\n6 to delete all users.\n7 to exit.");
             int value = scan.nextInt();
-            if (value == 1) sample.addUser();
-            if (value == 2) sample.getAllUser();
-            if (value == 3) sample.getUser();
-            if (value == 4) sample.updateUser();
-            if (value == 5) sample.deleteUser();
-            if (value == 6) sample.deleteAllUser();
-            if (value == 7) isOn = false;
-            if(value>7 || value <=0) System.out.println("Enter correct no.12");
+            switch (value) {
+                case 1:
+                    sample.addUser();
+                    break;
+                case 2:
+                    sample.getAllUser();
+                    break;
+                case 3:
+                    sample.getUser();
+                    break;
+                case 4:
+                    sample.updateUser();
+                    break;
+                case 5:
+                    sample.deleteUser();
+                    break;
+                case 6:
+                    sample.deleteAllUser();
+                    break;
+                case 7:
+                    isOn = false;
+                    break;
+                default:
+                    System.out.println("Enter correct no.12");
+            }
         }
     }
 
@@ -47,12 +64,14 @@ public class Sample {
         String password = scan.next();
         users = new UserDetails(username, email, number, dateOfBirth, password);
         userList.add(users);
+        System.out.print("User added.");
     }
 
     public void getAllUser() {
         System.out.println("All users. \n");
         if (userList.isEmpty()) {
-            System.out.println("User list is empty.");
+            System.out.println("User list is empty.\n");
+            System.out.flush();
         }
         for (UserDetails user : userList) {
             System.out.println("Username  :" + user.getUsername());
@@ -66,7 +85,7 @@ public class Sample {
     public void getUser() {
         System.out.print("Enter user name :");
         String name = scan.next();
-        boolean userExist= true;
+        boolean userExist = true;
         for (UserDetails user : userList) {
             if (user.getUsername().equals(name)) {
                 userExist = false;
@@ -78,8 +97,8 @@ public class Sample {
                 break;
             }
         }
-        if(userExist){
-            System.out.println("User does not exist.");
+        if (userExist) {
+            System.out.println("User does not exist.\n");
         }
     }
 
@@ -90,33 +109,42 @@ public class Sample {
         for (UserDetails user : userList) {
             if (user.getUsername().equals(name)) {
                 System.out.print("Enter the feild to be updated : [1 for Username, 2 for email, 3 for number, 4 for dateOfBirth, 5 for password] :");
-                int feild = scan.nextInt();
-                while (feild > 5 || feild <= 0) {
+                int field = scan.nextInt();
+                String newValue;
+                while (field > 5 || field <= 0) {
                     System.out.print("Enter correct field no.");
-                    feild = scan.nextInt();
-                }
-                if (feild == 1) {
-                    System.out.print("Enter new user name :");
-                    String newValue = scan.next();
-                    user.setUsername(newValue);
-                } else if (feild == 2) {
-                    System.out.print("Enter new email :");
-                    String newValue = scan.next();
-                    user.setEmail(newValue);
-                } else if (feild == 3) {
-                    System.out.print("Enter new Number :");
-                    String newValue = scan.next();
-                    user.setNumber(newValue);
-                } else if (feild == 4) {
-                    System.out.print("Enter new date of birth :");
-                    String newValue = scan.next();
-                    user.setDateofbirth(newValue);
-                } else {
-                    System.out.print("Enter new password :");
-                    String newValue = scan.next();
-                    user.setPassword(newValue);
+                    field = scan.nextInt();
                 }
 
+                switch (field) {
+                    case 1:
+                        System.out.print("Enter new user name :");
+                        newValue = scan.next();
+                        user.setUsername(newValue);
+                        break;
+                    case 2:
+                        System.out.print("Enter new email :");
+                        newValue = scan.next();
+                        user.setEmail(newValue);
+                        break;
+                    case 3:
+                        System.out.print("Enter new Number :");
+                        newValue = scan.next();
+                        user.setNumber(newValue);
+                        break;
+                    case 4:
+                        System.out.print("Enter new date of birth :");
+                        newValue = scan.next();
+                        user.setDateofbirth(newValue);
+                        break;
+                    case 5:
+                        System.out.print("Enter new password :");
+                        newValue = scan.next();
+                        user.setPassword(newValue);
+                        break;
+
+
+                }
 
                 user.setUsername(name);
                 System.out.println("After update :");
