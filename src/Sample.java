@@ -51,7 +51,7 @@ public class Sample {
     }
 
     public void addUser() {
-        System.out.println("Enter user datails.");
+        System.out.println("Enter user details.");
         System.out.print("Enter User name :");
         String username = scan.next();
         System.out.print("Enter User email :");
@@ -108,7 +108,7 @@ public class Sample {
         String name = scan.next();
         for (UserDetails user : userList) {
             if (user.getUsername().equals(name)) {
-                System.out.print("Enter the feild to be updated : [1 for Username, 2 for email, 3 for number, 4 for dateOfBirth, 5 for password] :");
+                System.out.print("Enter the field to be updated : [1 for Username, 2 for email, 3 for number, 4 for dateOfBirth, 5 for password] :");
                 int field = scan.nextInt();
                 String newValue;
                 while (field > 5 || field <= 0) {
