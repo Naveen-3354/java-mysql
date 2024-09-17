@@ -1,39 +1,62 @@
-import java.sql.*;
+ import java.sql.*;
+ import java.util.Scanner;
 
-public class SqlConnection {
+ public class SqlConnection {
+
+    final String url = "jdbc:mysql://localhost:3306";
+    static Scanner scan  = new Scanner(System.in);
+
     public static void main(String[] args) {
-        String url = "jdbc:mysql://127.0.0.1:3306/login_schema";
-        String username = "root";
-        String password = "root";
 
-        try {
+        SqlConnection sql = new SqlConnection();
+        try (Connection con = connection(sql.url)) {
+            System.out.println("Database connected....");
+            boolean isStart = true;
 
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = connection(url, username, password);
-            System.out.println("Connection Established successfully");
-            createRecord(con);
-            readRecord(con);
-            updateRecord(con);
-            deleteRecord(con);
-            con.close();
+            while(isStart){
+                System.out.print("Main menu: \n1.Create database. " +
+                        "\n2.View database. \n3.Select database.");
+                int num = scan.nextInt();
+                switch(num){
+                    case 1:
+                        createDatabase(con);
+                        break;
+                    case 2:
+                        viewDatabase(con);
+                        break;
+                    case 3:
+                        isStart = false;
+                }
+            }
         } catch (Exception e) {
             System.out.println(e.getMessage());
-        } finally {
-            System.out.println("Connection Closed....");
-
         }
     }
-
-    static Connection connection(String url, String username, String password) throws Exception {
+    static Connection connection(String url) throws Exception {
+        System.out.print("Enter user name :");
+        String username = scan.next();
+        System.out.println("Enter password :");
+        String password = scan.next();
         return DriverManager.getConnection(url, username, password);
     }
 
+    static void createDatabase(Connection con) throws SQLException {
+        PreparedStatement statement = con.prepareStatement("create schema "+scan.next());
+        statement.execute();
+    }
 
-    static void createRecord(Connection con){
-        try {
-            String sql = "INSERT INTO users (userId, userName, password) VALUES (?, ?, ?)";
-            PreparedStatement statement = con.prepareStatement(sql);
-            statement.setInt(1, 3);
+    static void viewDatabase(Connection con)throws SQLException{
+        PreparedStatement statement = con.prepareStatement("show databases;");
+        ResultSet resultSet = statement.executeQuery();
+        while(resultSet.next()){
+            System.out.println(resultSet.getString("database"));
+        }
+    }
+
+    static void createRecord(Connection con) {
+        String sql = "INSERT INTO users (userId, userName, password) VALUES (?, ?, ?)";
+        try (PreparedStatement statement = con.prepareStatement(sql);) {
+            statement.setInt(1, 12);
             statement.setString(2, "value2");
             statement.setString(3, "Naveenqeqw");
             statement.executeUpdate();
@@ -43,12 +66,11 @@ public class SqlConnection {
         }
     }
 
-    static void readRecord(Connection con){
-
+    static void readRecord(Connection con) {
         try {
             String sql = "SELECT userId, userName, password FROM users WHERE userId = ?";
             PreparedStatement statement = con.prepareStatement(sql);
-            statement.setInt(1, 3);
+            statement.setInt(1, 12 );
             ResultSet result = statement.executeQuery();
             if (result.next()) {
                 int column1 = result.getInt("userId");
@@ -63,14 +85,13 @@ public class SqlConnection {
         }
     }
 
-    static void updateRecord(Connection con){
-
+    static void updateRecord(Connection con) {
         try {
             String sql = "UPDATE users SET userId = ?, userName = ?, password = ? WHERE userId = ?";
             PreparedStatement statement = con.prepareStatement(sql);
-            statement.setInt(1, 3);
-            statement.setString(2, "new_value2");
-            statement.setString(3, "Qwerty");
+            statement.setInt(1, 1);
+            statement.setString(2, "Naveen");
+            statement.setString(3, "Naveen@123");
             statement.setInt(4, 3);
             statement.executeUpdate();
             System.out.println("Record updated.");
@@ -79,7 +100,7 @@ public class SqlConnection {
         }
     }
 
-    static void deleteRecord(Connection con){
+    static void deleteRecord(Connection con) {
         try {
             String sql = "DELETE FROM users WHERE userId = ?";
             PreparedStatement statement = con.prepareStatement(sql);
@@ -91,5 +112,6 @@ public class SqlConnection {
         }
 
     }
+
 
 }

@@ -1,8 +1,6 @@
-package model;
-
 import java.util.Objects;
 
-public class UserDetails {
+public class Users {
 
     private String username;
     private String email;
@@ -10,7 +8,7 @@ public class UserDetails {
     private String dateofbirth;
     private String password;
 
-    public UserDetails(String username, String email, String number, String dateofbirth, String password) {
+    public Users(String username, String email, String number, String dateofbirth, String password) {
         this.username = username;
         this.email = email;
         this.number = number;
@@ -58,13 +56,7 @@ public class UserDetails {
         this.password = password;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        UserDetails that = (UserDetails) o;
-        return Objects.equals(username, that.username) && Objects.equals(email, that.email) && Objects.equals(number, that.number) && Objects.equals(dateofbirth, that.dateofbirth) && Objects.equals(password, that.password);
-    }
+
 
     @Override
     public int hashCode() {

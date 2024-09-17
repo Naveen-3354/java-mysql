@@ -1,4 +1,3 @@
-import model.UserDetails;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,18 +5,17 @@ import java.util.Scanner;
 
 public class Sample {
     public static Scanner scan;
-    public static List<UserDetails> userList;
+    public static List<Users> userList;
+    public static Users users;
 
     public Sample() {
         scan = new Scanner(System.in);
         userList = new ArrayList<>();
     }
-
-    public static UserDetails users;
-
-    public static void main(String[] args) {
+    
+    public static void main(String... args) {
         Sample sample = new Sample();
-        boolean isOn = true;
+        var isOn = true;
         while (isOn) {
             System.out.println("MAIN MENU:");
             System.out.println("1 to add user.\n2 to get all user details.\n3 to get specific user detail.\n4 to update a user.\n5 to delete a specific user.\n6 to delete all users.\n7 to exit.");
@@ -45,10 +43,13 @@ public class Sample {
                     isOn = false;
                     break;
                 default:
-                    System.out.println("Enter correct no.12");
+                    System.out.println("Enter correct no.");
             }
         }
     }
+
+
+
 
     public void addUser() {
         System.out.println("Enter user details.");
@@ -62,7 +63,7 @@ public class Sample {
         String dateOfBirth = scan.next();
         System.out.print("Enter User password :");
         String password = scan.next();
-        users = new UserDetails(username, email, number, dateOfBirth, password);
+        users = new Users(username, email, number, dateOfBirth, password);
         userList.add(users);
         System.out.print("User added.");
     }
@@ -73,7 +74,7 @@ public class Sample {
             System.out.println("User list is empty.\n");
             System.out.flush();
         }
-        for (UserDetails user : userList) {
+        for (Users user : userList) {
             System.out.println("Username  :" + user.getUsername());
             System.out.println("Email     :" + user.getEmail());
             System.out.println("Number    :" + user.getNumber());
@@ -86,7 +87,7 @@ public class Sample {
         System.out.print("Enter user name :");
         String name = scan.next();
         boolean userExist = true;
-        for (UserDetails user : userList) {
+        for (Users user : userList) {
             if (user.getUsername().equals(name)) {
                 userExist = false;
                 System.out.println("Username  :" + user.getUsername());
@@ -106,7 +107,7 @@ public class Sample {
         System.out.println("Update User.\n");
         System.out.print("Enter user name :");
         String name = scan.next();
-        for (UserDetails user : userList) {
+        for (Users user : userList) {
             if (user.getUsername().equals(name)) {
                 System.out.print("Enter the field to be updated : [1 for Username, 2 for email, 3 for number, 4 for dateOfBirth, 5 for password] :");
                 int field = scan.nextInt();
@@ -163,7 +164,7 @@ public class Sample {
         System.out.println("Delete user form the List.");
         System.out.print("Enter user name");
         String deleteName = scan.next();
-        for (UserDetails user : userList) {
+        for (Users user : userList) {
             if (user.getUsername().equals(deleteName)) {
                 userList.remove(user);
                 break;
@@ -176,4 +177,62 @@ public class Sample {
         userList.clear();
         System.out.println("All users are deleted.");
     }
+}
+
+class UserDetails {
+
+    private String username;
+    private String email;
+    private String number;
+    private String dateofbirth;
+    private String password;
+
+    public UserDetails(String username, String email, String number, String dateofbirth, String password) {
+        this.username = username;
+        this.email = email;
+        this.number = number;
+        this.dateofbirth = dateofbirth;
+        this.password = password;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    public String getDateofbirth() {
+        return dateofbirth;
+    }
+
+    public void setDateofbirth(String dateofbirth) {
+        this.dateofbirth = dateofbirth;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
 }
